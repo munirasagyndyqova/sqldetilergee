@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL | Шпаргалка</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <span class="tag">ИНФОРМАТИКА • КОНСПЕКТ</span>
+  <h1>SQL <span>Cheat Sheet</span></h1>
+  <p>Все основные команды SQL с примерами и простыми объяснениями</p>
+  <div class="chips">
+    <span>SQLite</span>
+    <span>Базы данных</span>
+  
+  </div>
+</header>
+
+
+<section class="contents" id="contents">
+  <div class="contents-heading">
+    <span class="contents-label">SQL GUIDE</span>
+    <h2>Содержание</h2>
+    <p>Выбери тему, которую хочешь повторить ✨</p>
+  </div>
+
+  <div class="contents-grid">
+    <a href="#basics" class="contents-item">
+      <span class="contents-number">01</span>
+      <span>Основы SQL</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#create" class="contents-item">
+      <span class="contents-number">02</span>
+      <span>Создание таблиц</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#update" class="contents-item">
+      <span class="contents-number">03</span>
+      <span>Изменение данных</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#select" class="contents-item">
+      <span class="contents-number">04</span>
+      <span>Выборка данных</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#filter" class="contents-item">
+      <span class="contents-number">05</span>
+      <span>Фильтрация</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#aggregate" class="contents-item">
+      <span class="contents-number">06</span>
+      <span>Агрегатные функции</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#group" class="contents-item">
+      <span class="contents-number">07</span>
+      <span>GROUP BY и HAVING</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+    <a href="#joins" class="contents-item">
+      <span class="contents-number">08</span>
+      <span>JOIN и связи</span>
+      <span class="contents-arrow">↗</span>
+    </a>
+
+  
+  </div>
+</section>
+
+  <main>
+
+    <section id="intro">
+      <div class="section-label">01 / INTRODUCTION</div>
+      <h2>Основы SQL</h2>
+      <p><b>SQL</b> — язык запросов для работы с базами данных. Он позволяет создавать, находить, изменять и удалять данные.</p>
+
+      <div class="info-grid">
+        <div class="info"><b>База данных</b><p>Организованное хранилище информации.</p></div>
+        <div class="info"><b>СУБД</b><p>Программа для работы с БД: SQLite, MySQL, PostgreSQL.</p></div>
+        <div class="info"><b>Поле</b><p>Столбец таблицы, например title или price.</p></div>
+        <div class="info"><b>Запись</b><p>Одна строка таблицы, например одна книга.</p></div>
+      </div>
+
+      <h3>Пример таблицы books</h3>
+      <div class="table-scroll">
+        <table>
+          <tr><th>id</th><th>title</th><th>genre</th><th>price</th><th>rating</th></tr>
+          <tr><td>1</td><td>Гарри Поттер</td><td>Фэнтези</td><td>4500</td><td>9</td></tr>
+          <tr><td>2</td><td>Идиот</td><td>Классика</td><td>3200</td><td>8</td></tr>
+          <tr><td>3</td><td>Хоббит</td><td>Фэнтези</td><td>5100</td><td>9</td></tr>
+          <tr><td>4</td><td>1984</td><td>Антиутопия</td><td>3900</td><td>10</td></tr>
+        </table>
+      </div>
+      <p class="hint">В примерах используем эту таблицу. Для запросов с датами и другими полями предполагается, что соответствующие столбцы уже существуют.</p>
+    </section>
+
+    <section id="create">
+      <div class="section-label">02 / DATABASE STRUCTURE</div>
+      <h2>Создание таблиц</h2>
+
+      <div class="card">
+        <div class="card-top"><h3>CREATE TABLE</h3><span>Создание</span></div>
+        <p>Создаёт новую таблицу с указанными столбцами и типами данных.</p>
+        <pre><code>CREATE TABLE books (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  genre TEXT,
+  price INTEGER,
+  rating INTEGER
+);</code></pre>
+        <div class="explanation">
+          <b>Разбор:</b>
+          <p><b>INTEGER</b> — целое число; <b>TEXT</b> — текст; <b>PRIMARY KEY</b> — уникальный идентификатор; <b>AUTOINCREMENT</b> — автоматическая нумерация; <b>NOT NULL</b> — обязательное поле.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>INSERT INTO</h3><span>Добавление</span></div>
+        <p>Добавляет новые записи в таблицу.</p>
+        <pre><code>INSERT INTO books (title, genre, price, rating)
+VALUES ('Гарри Поттер', 'Фэнтези', 4500, 9);</code></pre>
+        <div class="explanation">В таблицу добавится книга «Гарри Поттер». Текст записывается в одинарных кавычках, а числа — без них.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><h3>DROP TABLE</h3><span>Удаление таблицы</span></div>
+        <pre><code>DROP TABLE books;</code></pre>
+        <div class="warning">Важно! Удаляется вся таблица вместе со всеми данными, а не одна запись.</div>
+      </div>
+    </section>
+
+    <section id="edit">
+      <div class="section-label">03 / MODIFY DATA</div>
+      <h2>Изменение данных</h2>
+
+      <div class="card">
+        <h3>UPDATE + SET</h3>
+        <p><b>UPDATE</b> изменяет существующие записи. <b>SET</b> указывает новое значение.</p>
+        <pre><code>UPDATE books
+SET price = 5000
+WHERE id = 1;</code></pre>
+        <div class="explanation">У книги с id = 1 цена изменится на 5000.</div>
+        <pre><code>UPDATE books
+SET price = price + 500
+WHERE genre = 'Фэнтези';</code></pre>
+        <div class="explanation">Цена всех книг жанра «Фэнтези» увеличится на 500.</div>
+      </div>
+
+      <div class="card">
+        <h3>DELETE FROM</h3>
+        <p>Удаляет строки, подходящие под условие.</p>
+        <pre><code>DELETE FROM books
+WHERE price &lt; 3500;</code></pre>
+        <div class="explanation">Удалятся все книги дешевле 3500.</div>
+        <div class="warning">Если забыть WHERE, DELETE удалит все строки, а UPDATE изменит все строки.</div>
+      </div>
+    </section>
+
+    <section id="select">
+      <div class="section-label">04 / SELECT DATA</div>
+      <h2>Выборка данных</h2>
+
+      <div class="card">
+        <h3>SELECT и FROM</h3>
+        <p><b>SELECT</b> — какие столбцы показать. <b>FROM</b> — из какой таблицы.</p>
+        <pre><code>SELECT * FROM books;</code></pre>
+        <div class="explanation">Звёздочка * означает все столбцы.</div>
+        <pre><code>SELECT title, price
+FROM books;</code></pre>
+        <div class="explanation">Выведет только названия книг и цены.</div>
+      </div>
+
+      <div class="card">
+        <h3>ORDER BY</h3>
+        <p>Сортирует результат запроса.</p>
+        <pre><code>SELECT * FROM books
+ORDER BY price ASC;</code></pre>
+        <div class="explanation"><b>ASC</b> — по возрастанию, от дешёвых к дорогим.</div>
+        <pre><code>SELECT * FROM books
+ORDER BY price DESC;</code></pre>
+        <div class="explanation"><b>DESC</b> — по убыванию, от дорогих к дешёвым.</div>
+      </div>
+
+      <div class="card">
+        <h3>LIMIT</h3>
+        <p>Ограничивает количество выводимых строк.</p>
+        <pre><code>SELECT * FROM books
+ORDER BY price DESC
+LIMIT 3;</code></pre>
+        <div class="explanation">Покажет три самые дорогие книги.</div>
+      </div>
+
+      <div class="card">
+        <h3>DISTINCT</h3>
+        <p>Убирает повторяющиеся значения в результате.</p>
+        <pre><code>SELECT DISTINCT genre
+FROM books;</code></pre>
+        <div class="explanation">Выведет каждый жанр только один раз.</div>
+      </div>
+    </section>
+
+    <section id="filter">
+      <div class="section-label">05 / FILTERING</div>
+      <h2>Фильтрация данных</h2>
+
+      <div class="card">
+        <h3>WHERE</h3>
+        <p>Отбирает строки по условию.</p>
+        <pre><code>SELECT * FROM books
+WHERE price &gt; 4000;</code></pre>
+        <div class="explanation">Выведет книги дороже 4000.</div>
+        <div class="operator-grid">
+          <div><code>=</code><span>Равно</span></div>
+          <div><code>!=</code><span>Не равно</span></div>
+          <div><code>&gt;</code><span>Больше</span></div>
+          <div><code>&lt;</code><span>Меньше</span></div>
+          <div><code>&gt;=</code><span>Больше или равно</span></div>
+          <div><code>&lt;=</code><span>Меньше или равно</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>AND / OR / NOT</h3>
+        <p><b>AND</b> — оба условия должны выполняться.</p>
+        <pre><code>SELECT * FROM books
+WHERE genre = 'Фэнтези'
+AND price &lt; 5000;</code></pre>
+        <div class="explanation">Книги жанра «Фэнтези», которые дешевле 5000.</div>
+
+        <p><b>OR</b> — достаточно одного условия.</p>
+        <pre><code>SELECT * FROM books
+WHERE genre = 'Классика'
+OR rating = 10;</code></pre>
+        <div class="explanation">Книги жанра «Классика» или книги с рейтингом 10.</div>
+
+        <p><b>NOT</b> — отрицание условия.</p>
+        <pre><code>SELECT * FROM books
+WHERE NOT genre = 'Фэнтези';</code></pre>
+        <div class="explanation">Книги, жанр которых не «Фэнтези».</div>
+      </div>
+
+      <div class="card">
+        <h3>BETWEEN</h3>
+        <p>Проверяет диапазон значений, включая границы.</p>
+        <pre><code>SELECT * FROM books
+WHERE price BETWEEN 3000 AND 5000;</code></pre>
+        <div class="explanation">Выведет книги с ценой от 3000 до 5000 включительно.</div>
+      </div>
+
+      <div class="card">
+        <h3>IN</h3>
+        <p>Проверяет, входит ли значение в список.</p>
+        <pre><code>SELECT * FROM books
+WHERE genre IN ('Фэнтези', 'Классика');</code></pre>
+        <div class="explanation">Выведет книги двух указанных жанров. IN заменяет несколько условий OR.</div>
+      </div>
+
+      <div class="card">
+        <h3>LIKE</h3>
+        <p>Используется для поиска текста по шаблону.</p>
+        <div class="operator-grid">
+          <div><code>%</code><span>Любое количество символов</span></div>
+          <div><code>_</code><span>Ровно один символ</span></div>
+        </div>
+        <pre><code>SELECT * FROM books
+WHERE title LIKE 'Г%';</code></pre>
+        <div class="explanation">Название начинается на «Г».</div>
+        <pre><code>SELECT * FROM books
+WHERE title LIKE '%т';</code></pre>
+        <div class="explanation">Название заканчивается на «т».</div>
+        <pre><code>SELECT * FROM books
+WHERE title LIKE '___';</code></pre>
+        <div class="explanation">Название состоит ровно из трёх символов.</div>
+
+        <h4>LIKE с датами</h4>
+        <pre><code>SELECT * FROM books
+WHERE publish_date LIKE '2024-05-%'
+OR publish_date LIKE '2024-06-%'
+ORDER BY price ASC;</code></pre>
+        <div class="explanation">Выведет книги, опубликованные в мае или июне 2024 года, по возрастанию цены. Даты должны храниться в формате YYYY-MM-DD.</div>
+      </div>
+    </section>
+
+    <section id="functions">
+      <div class="section-label">06 / AGGREGATE FUNCTIONS</div>
+      <h2>Агрегатные функции</h2>
+      <p>Позволяют считать количество, сумму, среднее, минимум и максимум.</p>
+
+      <div class="info-grid">
+        <div class="info"><b>COUNT()</b><p>Количество записей</p></div>
+        <div class="info"><b>SUM()</b><p>Сумма значений</p></div>
+        <div class="info"><b>AVG()</b><p>Среднее значение</p></div>
+        <div class="info"><b>MIN()</b><p>Минимум</p></div>
+        <div class="info"><b>MAX()</b><p>Максимум</p></div>
+        <div class="info"><b>AS</b><p>Псевдоним столбца</p></div>
+      </div>
+
+      <div class="card">
+        <h3>COUNT()</h3>
+        <pre><code>SELECT COUNT(*) AS total
+FROM books;</code></pre>
+        <div class="explanation">Посчитает количество книг. Для нашей таблицы ответ: 4.</div>
+      </div>
+
+      <div class="card">
+        <h3>SUM() и AVG()</h3>
+        <pre><code>SELECT SUM(price) AS total_price,
+       AVG(price) AS average_price
+FROM books;</code></pre>
+        <div class="explanation">SUM сложит все цены, AVG найдёт среднюю цену.</div>
+      </div>
+
+      <div class="card">
+        <h3>MIN() и MAX()</h3>
+        <pre><code>SELECT MIN(price) AS cheapest,
+       MAX(price) AS expensive
+FROM books;</code></pre>
+        <div class="explanation">Минимальная цена — 3200, максимальная — 5100.</div>
+      </div>
+    </section>
+
+    <section id="group">
+      <div class="section-label">07 / GROUPING</div>
+      <h2>GROUP BY и HAVING</h2>
+
+      <div class="card">
+        <h3>GROUP BY</h3>
+        <p>Объединяет записи с одинаковыми значениями в группы.</p>
+        <pre><code>SELECT genre, COUNT(*) AS total
+FROM books
+GROUP BY genre;</code></pre>
+        <div class="explanation">Посчитает, сколько книг относится к каждому жанру.</div>
+        <div class="table-scroll">
+          <table>
+            <tr><th>genre</th><th>total</th></tr>
+            <tr><td>Фэнтези</td><td>2</td></tr>
+            <tr><td>Классика</td><td>1</td></tr>
+            <tr><td>Антиутопия</td><td>1</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>HAVING</h3>
+        <p>Фильтрует группы после группировки.</p>
+        <pre><code>SELECT genre, COUNT(*) AS total
+FROM books
+GROUP BY genre
+HAVING COUNT(*) &gt; 1;</code></pre>
+        <div class="explanation">Оставит только жанры, в которых больше одной книги. Ответ: Фэнтези — 2.</div>
+      </div>
+
+      <div class="comparison">
+        <div><h4>WHERE</h4><p>Фильтрует отдельные строки <b>до</b> группировки.</p></div>
+        <div><h4>HAVING</h4><p>Фильтрует готовые группы <b>после</b> группировки.</p></div>
+      </div>
+
+      <div class="card">
+        <h3>Комбинированный запрос</h3>
+        <pre><code>
+      
+<section id="joins">
+  <h2>🔗 JOIN — объединение таблиц</h2>
+  <p>
+    JOIN используется, чтобы объединить данные
+    из двух или нескольких таблиц по общему полю.
+  </p>
+
+  <div class="card">
+    <h3>Пример двух таблиц</h3>
+    <p>Таблица <code>students</code>:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <tr><th>id</th><th>name</th><th>genre_id</th></tr>
+        <tr><td>1</td><td>Алия</td><td>1</td></tr>
+        <tr><td>2</td><td>Данияр</td><td>2</td></tr>
+        <tr><td>3</td><td>Аружан</td><td>NULL</td></tr>
+      </table>
+    </div>
+
+    <p>Таблица <code>genres</code>:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <tr><th>id</th><th>genre_name</th></tr>
+        <tr><td>1</td><td>Фэнтези</td></tr>
+        <tr><td>2</td><td>Детектив</td></tr>
+        <tr><td>3</td><td>Комедия</td></tr>
+      </table>
+    </div>
+
+    <div class="explanation">
+      <strong>Как связаны таблицы?</strong><br>
+      students.genre_id указывает на genres.id.
+      По этим столбцам мы будем объединять данные.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="command">INNER JOIN</span>
+    <h3>1. INNER JOIN — только совпадения</h3>
+    <p>
+      Выводит только те строки, для которых
+      нашлось совпадение в обеих таблицах.
+    </p>
+
+    <pre><code>SELECT students.name, genres.genre_name
+FROM students
+INNER JOIN genres
+ON students.genre_id = genres.id;</code></pre>
+
+    <h4>Результат:</h4>
+    <div class="table-wrapper">
+      <table>
+        <tr><th>name</th><th>genre_name</th></tr>
+        <tr><td>Алия</td><td>Фэнтези</td></tr>
+        <tr><td>Данияр</td><td>Детектив</td></tr>
+      </table>
+    </div>
+
+    <div class="explanation">
+      Аружан не выводится, потому что у неё
+      нет жанра. Комедия тоже не выводится,
+      потому что с ней нет ученика.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="command">LEFT JOIN</span>
+    <h3>2. LEFT JOIN — все из левой таблицы</h3>
+    <p>
+      Выводит все строки из таблицы слева
+      (students), даже если совпадения нет.
+    </p>
+
+    <pre><code>SELECT students.name, genres.genre_name
+FROM students
+LEFT JOIN genres
+ON students.genre_id = genres.id;</code></pre>
+
+    <h4>Результат:</h4>
+    <div class="table-wrapper">
+      <table>
+        <tr><th>name</th><th>genre_name</th></tr>
+        <tr><td>Алия</td><td>Фэнтези</td></tr>
+        <tr><td>Данияр</td><td>Детектив</td></tr>
+        <tr><td>Аружан</td><td>NULL</td></tr>
+      </table>
+    </div>
+
+    <div class="explanation">
+      Аружан осталась в результате,
+      потому что LEFT JOIN сохраняет
+      все строки левой таблицы.
+      NULL означает отсутствие значения.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="command">RIGHT JOIN</span>
+    <h3>3. RIGHT JOIN — все из правой таблицы</h3>
+    <p>
+      Выводит все строки из таблицы справа
+      (genres), даже если совпадения нет.
+    </p>
+
+    <pre><code>SELECT students.name, genres.genre_name
+FROM students
+RIGHT JOIN genres
+ON students.genre_id = genres.id;</code></pre>
+
+    <h4>Результат:</h4>
+    <div class="table-wrapper">
+      <table>
+        <tr><th>name</th><th>genre_name</th></tr>
+        <tr><td>Алия</td><td>Фэнтези</td></tr>
+        <tr><td>Данияр</td><td>Детектив</td></tr>
+        <tr><td>NULL</td><td>Комедия</td></tr>
+      </table>
+    </div>
+
+    <div class="explanation">
+      Комедия осталась, потому что находится
+      в правой таблице. Аружан не выводится.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="command">FULL JOIN</span>
+    <h3>4. FULL JOIN — все из обеих таблиц</h3>
+    <p>
+      Выводит все строки из обеих таблиц.
+      Если совпадения нет, появляется NULL.
+    </p>
+
+    <pre><code>SELECT students.name, genres.genre_name
+FROM students
+FULL JOIN genres
+ON students.genre_id = genres.id;</code></pre>
+
+    <h4>Результат:</h4>
+    <div class="table-wrapper">
+      <table>
+        <tr><th>name</th><th>genre_name</th></tr>
+        <tr><td>Алия</td><td>Фэнтези</td></tr>
+        <tr><td>Данияр</td><td>Детектив</td></tr>
+        <tr><td>Аружан</td><td>NULL</td></tr>
+        <tr><td>NULL</td><td>Комедия</td></tr>
+      </table>
+    </div>
+
+    <div class="explanation">
+      FULL JOIN сохраняет и Аружан,
+      и Комедию, даже без совпадений.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="command">DOUBLE JOIN</span>
+    <h3>5. Двойной JOIN — три таблицы</h3>
+    <p>
+      Используется, когда две таблицы связаны
+      через третью, промежуточную таблицу.
+    </p>
+
+    <pre><code>SELECT Readers.name, Clubs.club_name
+FROM Readers
+INNER JOIN Reader_Club
+ON Readers.id = Reader_Club.reader_id
+INNER JOIN Clubs
+ON Clubs.id = Reader_Club.club_id;</code></pre>
+
+    <div class="explanation">
+      <strong>Пошагово:</strong><br>
+      1. Берём таблицу Readers.<br>
+      2. Соединяем её с Reader_Club.<br>
+      3. Соединяем результат с Clubs.<br>
+      4. Получаем имена читателей и названия
+      клубов, в которых они состоят.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🧠 Как запомнить JOIN?</h3>
+
+    <div class="table-wrapper">
+      <table>
+        <tr>
+          <th>Команда</th>
+          <th>Что выводит?</th>
+        </tr>
+        <tr>
+          <td>INNER JOIN</td>
+          <td>Только совпадения</td>
+        </tr>
+        <tr>
+          <td>LEFT JOIN</td>
+          <td>Все строки слева</td>
+        </tr>
+        <tr>
+          <td>RIGHT JOIN</td>
+          <td>Все строки справа</td>
+        </tr>
+        <tr>
+          <td>FULL JOIN</td>
+          <td>Все строки с обеих сторон</td>
+        </tr>
+        <tr>
+          <td>Двойной JOIN</td>
+          <td>Соединение через третью таблицу</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tip">
+      💡 Запомни: ON указывает,
+      по каким столбцам соединять таблицы.
+      NULL означает отсутствие значения.
+    </div>
+  </div>
+</section>

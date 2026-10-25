@@ -706,3 +706,311 @@ pre .comment {
 .contents-heading p {
   color: #716782 !important;
 }
+
+/* =====================================
+   MOBILE RESPONSIVE — SQL CHEATSHEET
+===================================== */
+
+/* Общая адаптивность */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Контейнеры */
+main,
+.container,
+section {
+  width: 100%;
+  max-width: 1100px;
+  min-width: 0;
+}
+
+.card,
+.topic-card,
+.command-card,
+.contents {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* SQL-код */
+pre {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  overflow-wrap: normal;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre code {
+  white-space: inherit;
+  overflow-wrap: normal;
+}
+
+/* Таблицы */
+.table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+  width: 100%;
+  min-width: 380px;
+}
+
+/* Сетки */
+.grid,
+.cards-grid,
+.contents-grid {
+  min-width: 0;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+  main,
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .grid,
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contents-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+  body {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* Шапка сайта */
+  header,
+  .hero {
+    padding: 45px 18px 35px;
+  }
+
+  header h1,
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    overflow-wrap: anywhere;
+  }
+
+  header p,
+  .hero p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* Основной контент */
+  main,
+  .container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  section {
+    margin-bottom: 35px;
+    scroll-margin-top: 80px;
+  }
+
+  section h2 {
+    font-size: 22px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  /* Карточки */
+  .card,
+  .topic-card,
+  .command-card {
+    padding: 18px 14px;
+    border-radius: 15px;
+    margin-bottom: 14px;
+  }
+
+  .card:hover,
+  .topic-card:hover,
+  .command-card:hover {
+    transform: none;
+  }
+
+  /* Содержание */
+  .contents {
+    padding: 22px 15px;
+    border-radius: 18px;
+    margin: 20px 0 35px;
+  }
+
+  .contents-heading h2 {
+    font-size: 24px;
+  }
+
+  .contents-heading p {
+    font-size: 13px;
+  }
+
+  .contents-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .contents-item {
+    padding: 15px 13px;
+    font-size: 13px;
+    min-height: 52px;
+    border-radius: 11px;
+  }
+
+  .contents-number {
+    font-size: 12px;
+  }
+
+  /* SQL-код */
+  pre {
+    font-size: 11px;
+    line-height: 1.8;
+    padding: 14px 12px;
+    border-radius: 11px;
+    margin: 12px 0;
+  }
+
+  pre code {
+    font-size: 11px;
+  }
+
+  /* Обычный код */
+  p code,
+  li code,
+  td code {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
+  /* Таблицы */
+  .table-wrapper {
+    border-radius: 10px;
+    margin: 14px 0;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  /* Объяснения */
+  .explanation,
+  .info-box,
+  .tip,
+  .tip-box,
+  .warning,
+  .warning-box {
+    padding: 13px 12px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-radius: 9px;
+  }
+
+  /* Навигация */
+  nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 7px;
+    padding: 10px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  nav a {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 8px 11px;
+  }
+
+  /* Кнопки */
+  button,
+  .btn {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  /* Подвал */
+  footer {
+    margin-top: 40px;
+    padding: 25px 15px;
+    font-size: 12px;
+  }
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 380px) {
+
+  header h1,
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  main,
+  .container {
+    padding: 0 10px;
+  }
+
+  .card,
+  .topic-card,
+  .command-card {
+    padding: 15px 11px;
+  }
+
+  pre,
+  pre code {
+    font-size: 10px;
+  }
+}

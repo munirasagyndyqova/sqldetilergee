@@ -369,11 +369,30 @@ HAVING COUNT(*) &gt; 1;</code></pre>
         <div><h4>HAVING</h4><p>Фильтрует готовые группы <b>после</b> группировки.</p></div>
       </div>
 
-      <div class="card">
-        <h3>Комбинированный запрос</h3>
-        <pre><code>
       
+<div class="card">
+  <h3>Комбинированный запрос</h3>
+
+  <pre><code>SELECT genre, COUNT(*) AS total
+FROM books
+WHERE price > 3000
+GROUP BY genre
+HAVING COUNT(*) > 1
+ORDER BY total DESC;</code></pre>
+
+  <div class="explanation">
+    Сначала выбираем книги дороже 3000,
+    затем группируем их по жанру.
+    Оставляем жанры, в которых больше
+    одной книги, и сортируем результат.
+  </div>
+</div>
+
+</section>
+
 <section id="joins">
+  <h2>🔗 JOIN — объединение таблиц</h2>
+
   <h2>🔗 JOIN — объединение таблиц</h2>
   <p>
     JOIN используется, чтобы объединить данные
